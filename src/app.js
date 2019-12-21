@@ -28,10 +28,6 @@ if (NODE_ENV !== "production") {
   );
 }
 
-app.get("/reviews", (req, res) => {
-  res.send();
-});
-
 app.get("/", (req, res) => {
   res.send("Hello, world!");
 });
