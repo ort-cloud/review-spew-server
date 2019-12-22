@@ -5,6 +5,7 @@ const cors = require("cors");
 const helmet = require("helmet");
 const {NODE_ENV} = require("./config");
 const winston = require("winston");
+const SpewService = require("./spew-service");
 
 const app = express();
 
@@ -27,6 +28,24 @@ if (NODE_ENV !== "production") {
     })
   );
 }
+
+app.get("/movies/:movies_id", (req, res, next) => {
+  const knexInstance = req.app.get("db");
+  SpewService.getMovieById(knexInstance, req.params.movies_id)
+    .then(movies => {
+      res.json(movies);
+    })
+    .catch(next);
+});
+
+app.get("/reviews/:reviews_id", (req, res, next) => {
+  const knexInstance = req.app.get("db");
+  SpewService.getReviewsById(knexInstance, req.params.reviews_id)
+    .then(reviews => {
+      res.json(reviews);
+    })
+    .catch(next);
+});
 
 app.get("/", (req, res) => {
   res.send("Hello, world!");
