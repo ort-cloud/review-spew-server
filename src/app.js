@@ -47,11 +47,11 @@ app.get("/reviews/:reviews_id", (req, res, next) => {
     .catch(next);
 });
 
-app.get("/test/:movie_title", (req, res, next) => {
+app.get("/search/:movie_title", (req, res, next) => {
   const knexInstance = req.app.get("db");
-  SpewService.getWhateverDataIcan(knexInstance, req.params.movie_title)
-    .then(test1 => {
-      console.log(res.json(test1));
+  SpewService.getReviewsByTitle(knexInstance, req.params.movie_title)
+    .then(search => {
+      console.log(res.json(search));
     })
     .catch(next);
 });

@@ -15,11 +15,17 @@ const SpewService = {
       .first();
   },
 
-  getWhateverDataIcan(knex, movie_title) {
+  getReviewsByTitle(knex, movie_title) {
     return knex
       .from("movies")
       .innerJoin("reviews", "movies.movies_id", "reviews.movies_id")
-      .select("*")
+      .select(
+        "movies.movie_title",
+        "movies.genre",
+        "reviews.review_author",
+        "reviews.review_url",
+        "reviews.review_text"
+      )
       .where("movie_title", movie_title);
   },
 };
