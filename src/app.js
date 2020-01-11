@@ -51,7 +51,7 @@ app.get("/search/:movie_title", (req, res, next) => {
   const knexInstance = req.app.get("db");
   SpewService.getReviewsByTitle(knexInstance, req.params.movie_title)
     .then(search => {
-      console.log(res.json(search));
+      return res.json(search);
     })
     .catch(next);
 });
