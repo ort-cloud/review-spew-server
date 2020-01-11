@@ -32,7 +32,7 @@ if (NODE_ENV !== "production") {
 
 app.use("/api/search", spewRouter);
 
-app.get("/search/:movie_title", (req, res, next) => {
+/* app.get("/search/:movie_title", (req, res, next) => {
   const knexInstance = req.app.get("db");
   SpewService.getReviewsByTitle(knexInstance, req.params.movie_title)
     .then(search => {
@@ -41,7 +41,7 @@ app.get("/search/:movie_title", (req, res, next) => {
     .catch(next);
 });
 
-/* app.get("/movies/:movies_id", (req, res, next) => {
+app.get("/movies/:movies_id", (req, res, next) => {
   const knexInstance = req.app.get("db");
   SpewService.getMovieById(knexInstance, req.params.movies_id)
     .then(movies => {
