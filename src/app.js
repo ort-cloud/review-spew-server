@@ -6,6 +6,7 @@ const helmet = require("helmet");
 const {NODE_ENV} = require("./config");
 const winston = require("winston");
 const SpewService = require("./spew-service");
+const spewRouter = require("./spew-router");
 
 const app = express();
 
@@ -29,7 +30,18 @@ if (NODE_ENV !== "production") {
   );
 }
 
-app.get("/movies/:movies_id", (req, res, next) => {
+app.use("/api/search", spewRouter);
+
+app.get("/search/:movie_title", (req, res, next) => {
+  const knexInstance = req.app.get("db");
+  SpewService.getReviewsByTitle(knexInstance, req.params.movie_title)
+    .then(search => {
+      return res.json(search);
+    })
+    .catch(next);
+});
+
+/* app.get("/movies/:movies_id", (req, res, next) => {
   const knexInstance = req.app.get("db");
   SpewService.getMovieById(knexInstance, req.params.movies_id)
     .then(movies => {
@@ -45,15 +57,10 @@ app.get("/reviews/:reviews_id", (req, res, next) => {
       res.json(reviews);
     })
     .catch(next);
-});
+}); */
 
-app.get("/search/:movie_title", (req, res, next) => {
-  const knexInstance = req.app.get("db");
-  SpewService.getReviewsByTitle(knexInstance, req.params.movie_title)
-    .then(search => {
-      return res.json(search);
-    })
-    .catch(next);
+app.get("/", (req, res) => {
+  res.send("Hello, world!");
 });
 
 app.use(function errorHandler(error, req, res, next) {

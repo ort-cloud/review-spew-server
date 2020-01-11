@@ -1,5 +1,11 @@
-describe("Spew service object", function() {
-  it("should run the tests", () => {
-    expect(true).to.eql(false);
-  });
+const {expect} = require("chai");
+const supertest = require("supertest");
+const app = require("../src/app");
+
+
+
+describe("Spew Endpoints", function() {
+  let db;
+
+  before('make knex isntance', () =)
 });
