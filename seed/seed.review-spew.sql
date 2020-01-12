@@ -1,5 +1,11 @@
 BEGIN;
 
+TRUNCATE
+  reviews,
+  movies
+  RESTART IDENTITY CASCADE;
+
+
 INSERT INTO movies (movies_id, movie_title, genre) VALUES
 (1,'Citizen Kane','Drama|Mystery'),
 (2,'The Godfather','Crime|Drama '),
