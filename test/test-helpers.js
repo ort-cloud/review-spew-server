@@ -23,11 +23,11 @@ function makeMoviesArray() {
   ];
 }
 
-function makeReviewsArray(movies) {
+function makeReviewsArray(makeMoviesArray) {
   return [
     {
       reviews_id: 1,
-      movies_id: movies[0].id,
+      movies_id: makeMoviesArray[0].movies_id,
       users_id: null,
       review_author: 'Test author 1',
       review_url:'Test URL 1',
@@ -35,7 +35,7 @@ function makeReviewsArray(movies) {
     },
     {
       reviews_id: 2,
-      movies_id: movies[1].id,
+      movies_id: makeMoviesArray[1].movies_id,
       users_id: null,
       review_author: 'Test author 2',
       review_url:'Test URL 2',
@@ -43,7 +43,7 @@ function makeReviewsArray(movies) {
     },
     {
       reviews_id: 3,
-      movies_id: movies[2].id,
+      movies_id: makeMoviesArray[2].movies_id,
       users_id: null,
       review_author: 'Test author 3',
       review_url:'Test URL 3',
@@ -51,7 +51,7 @@ function makeReviewsArray(movies) {
     },
     {
       reviews_id: 4,
-      movies_id: movies[3].id,
+      movies_id: makeMoviesArray[3].movies_id,
       users_id: null,
       review_author: 'Test author 4',
       review_url:'Test URL 4',
@@ -60,21 +60,10 @@ function makeReviewsArray(movies) {
   ];
 }
 
-function makeExpectedResponse(movies, reviews = []) {
-  return {
-    movie_title: movies.movie_title,
-    genre: movies.genre,
-    review_author: reviews.review_author,
-    review_url: reviews.review_url,
-    review_text: reviews.review_text,
-  }
-}
 
-function makeSpewFixtures() {
-  const testMovies = makeMoviesArray();
-  const testReviews = makeReviewsArray(testMovies);
-  return {testMovies, testReviews};
-}
+/* const testMovies = makeMoviesArray();
+const testReviews = makeReviewsArray(testMovies); */
+
 
 function cleanTables(db) {
   return db.transaction(trx =>
@@ -85,43 +74,22 @@ function cleanTables(db) {
         movies
         RESTART IDENTITY CASCADE`
       )
-      /* .then(() =>
-        Promise.all([
-          trx.raw(
-            `ALTER SEQUENCE reviews_id_seq minvalue 0 START WITH 1`
-          ),
-          trx.raw(
-            `ALTER SEQUENCE movies_id_seq minvalue 0 START WITH 1`
-          ),
-          trx.raw(`SELECT setval('reviews_id_seq', 0)`),
-          trx.raw(`SELECT setval('movies_id_seq', 0)`),
-        ])
-      ) */
   );
 }
 
-function seedSpewTables(db, movies, reviews = []) {
+function seedSpewTables(db) {
   // use a transaction to group the queries and auto rollback on any failure
+  const testMovies = makeMoviesArray();
+  const testReviews = makeReviewsArray(testMovies);
   return db.transaction(async trx => {
-    await trx.into("movies").insert(movies);
-    await trx.into("reviews").insert(reviews);
-    // update the auto sequence to match the forced id values
-    /* await Promise.all([
-      trx.raw(`SELECT setval('movies_id_seq', ?)`, [
-        movies[movies.length - 1].id,
-      ]),
-      trx.raw(`SELECT setval('reviews_id_seq', ?)`, [
-        reviews[reviews.length - 1].id,
-      ]),
-    ]); */
+    await trx.into("movies").insert(testMovies);
+    await trx.into("reviews").insert(testReviews);
   });
 }
 
 module.exports = {
   makeMoviesArray,
   makeReviewsArray,
-  makeExpectedResponse,
-  makeSpewFixtures,
   seedSpewTables,
   cleanTables,
 }
