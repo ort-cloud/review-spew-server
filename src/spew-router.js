@@ -8,7 +8,7 @@ spewRouter
   .get((req, res, next) => {
     SpewService.getReviewsByTitle(req.app.get("db"), req.params.movie_title)
       .then(movie => {
-        if (!movie) {
+        if (movie.length <= 0) {
           return res.status(404).json({
             error: {message: `no no no`},
           });
