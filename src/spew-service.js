@@ -1,14 +1,14 @@
 const SpewService = {
-  getMovieById(knex, id) {
-    return knex
+  getMovieById(db, id) {
+    return db
       .from("movies")
       .select("*")
       .where("movies_id", id)
       .first();
   },
 
-  getReviewsById(knex, id) {
-    return knex
+  getReviewsById(db, id) {
+    return db
       .from("reviews")
       .select("*")
       .where("reviews_id", id)
