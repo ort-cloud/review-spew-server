@@ -30,6 +30,7 @@ if (NODE_ENV !== "production") {
 }
 
 app.use("/api/search", spewRouter);
+app.use("/api/users", spewRouter);
 
 /* app.get("/search/:movie_title", (req, res, next) => {
   const knexInstance = req.app.get("db");

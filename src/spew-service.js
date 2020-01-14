@@ -6,13 +6,36 @@ const SpewService = {
       .where("movies_id", id)
       .first();
   },
-
   getReviewsById(db, id) {
     return db
       .from("reviews")
       .select("*")
       .where("reviews_id", id)
       .first();
+  },
+
+/*   insertArticle(knex, newArticle) {
+    return knex
+      .insert(newArticle)
+      .into("blogful_articles")
+      .returning("*")
+      .then(rows => {
+        return rows[0];
+      });
+  }, */
+
+  getAllUsers(knex) {
+    return knex.select("*").from("users");
+  },
+
+  insertUser(knex, newUser) {
+    return knex
+      .insert(newUser)
+      .into("users")
+      .returning("*")
+      .then(rows => {
+        return rows[0];
+      });
   },
 
   getReviewsByTitle(db, movie_title) {
