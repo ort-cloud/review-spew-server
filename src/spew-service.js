@@ -6,6 +6,7 @@ const SpewService = {
       .where("movies_id", id)
       .first();
   },
+
   getReviewsById(db, id) {
     return db
       .from("reviews")
@@ -13,16 +14,6 @@ const SpewService = {
       .where("reviews_id", id)
       .first();
   },
-
-/*   insertArticle(knex, newArticle) {
-    return knex
-      .insert(newArticle)
-      .into("blogful_articles")
-      .returning("*")
-      .then(rows => {
-        return rows[0];
-      });
-  }, */
 
   getAllUsers(knex) {
     return knex.select("*").from("users");
@@ -50,6 +41,15 @@ const SpewService = {
         "reviews.review_text"
       )
       .where("movie_title", movie_title);
+  },
+
+  insertSavedReview(db) {
+    return db
+      .insert(savedReview)
+      .into("usr_svd_rev")
+      .then(rows => {
+        return rows[0];
+      });
   },
 };
 

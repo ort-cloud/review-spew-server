@@ -9,7 +9,7 @@ spewRouter.route("/:movie_title").get((req, res, next) => {
     .then(movie => {
       if (movie.length <= 0) {
         return res.status(404).json({
-          error: {message: `no no no`},
+          error: {message: `Title does not exist.`},
         });
       }
       return res.status(200).json(movie);
@@ -45,9 +45,9 @@ spewRouter
     SpewService.insertUser(req.app.get("db"), newUser)
       .then(user => {
         res
-        .status(201)
-        .location(`/users/${user.id}`)
-        .json(user);
+          .status(201)
+          .location(`/users/${user.id}`)
+          .json(user);
       })
       .catch(next);
   });
