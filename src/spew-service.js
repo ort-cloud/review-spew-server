@@ -20,7 +20,7 @@ const SpewService = {
       .from("users")
       .select("*")
       .where("users_id", id)
-      .first();
+      /* .first(); */
   },
 
   getAllUsers(knex) {

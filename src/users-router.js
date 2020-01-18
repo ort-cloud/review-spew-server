@@ -39,15 +39,18 @@ spewUsersRouter
       .catch(next);
   });
 
-spewUsersRouter
-  .route("/:users_id")
-  .get((req,res,next)=>{
-    const knexInstance = req.app.get('db');
-    SpewService.getUsersById(knexInstance)
+spewUsersRouter.route("/:users_id").get((req, res, next) => {
+  const knexInstance = req.app.get("db");
+  SpewService.getUsersById(knexInstance, req.params.users_id)
     .then(users => {
-      res.json(users)
+      if (users.length <= 0) {
+        return res.status(404).json({
+          error: {message: `User doesn't exist`},
+        });
+      }
+      res.json(users);
     })
     .catch(next);
-  })
+});
 
 module.exports = spewUsersRouter;

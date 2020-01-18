@@ -41,9 +41,9 @@ app.use("/api/users", spewUsersRouter)
       return res.json(search);
     })
     .catch(next);
-}); */
+});
 
-/* app.get("/search/:movie_title", (req, res, next) => {
+app.get("/search/:movie_title", (req, res, next) => {
   const knexInstance = req.app.get("db");
   SpewService.getReviewsByTitle(knexInstance, req.params.movie_title)
     .then(search => {
