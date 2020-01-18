@@ -43,6 +43,7 @@ const SpewService = {
       .where("movie_title", movie_title);
   },
 
+  //TODO: Psuedo code. No logic behind it.
   insertSavedReview(db) {
     return db
       .insert(savedReview)
