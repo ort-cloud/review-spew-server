@@ -6,6 +6,8 @@ const helmet = require("helmet");
 const {NODE_ENV} = require("./config");
 const winston = require("winston");
 const spewRouter = require("./spew-router");
+const spewUsersRouter = require("./users-router")
+const SpewService = require("./spew-service");
 
 const app = express();
 
@@ -30,7 +32,16 @@ if (NODE_ENV !== "production") {
 }
 
 app.use("/api/search", spewRouter);
-app.use("/api/users", spewRouter);
+app.use("/api/users", spewUsersRouter)
+
+/* app.get("/users/:users_id", (req, res, next) => {
+  const knexInstance = req.app.get("db");
+  SpewService.getUsersById(knexInstance, req.params.users_id)
+    .then(search => {
+      return res.json(search);
+    })
+    .catch(next);
+}); */
 
 /* app.get("/search/:movie_title", (req, res, next) => {
   const knexInstance = req.app.get("db");

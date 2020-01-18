@@ -15,6 +15,14 @@ const SpewService = {
       .first();
   },
 
+  getUsersById(db, id) {
+    return db
+      .from("users")
+      .select("*")
+      .where("users_id", id)
+      .first();
+  },
+
   getAllUsers(knex) {
     return knex.select("*").from("users");
   },
