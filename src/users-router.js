@@ -29,11 +29,9 @@ spewUsersRouter.route("/").post(jsonParser, (req, res, next) => {
     .catch(next);
 });
 
-//TODO: Refactor! Creating getUserAndReviewId service to get both user and review id's. Logic above post will be removed.
-//left logic in for reference
 spewUsersRouter
-  .route("/saved")
-  .all((req, res, next) => {
+  .route("/:users_id")
+  .get((req, res, next) => {
     const knexInstance = req.app.get("db");
     SpewService.getUsersById(knexInstance, req.params.users_id)
       .then(users => {
@@ -46,43 +44,13 @@ spewUsersRouter
       })
       .catch(next);
   })
-  .all((req, res, next) => {
-    const knexInstance = req.app.get("db");
-    SpewService.getReviewsById(knexInstance, req.params.reviews_id)
-      .then(reviews => {
-        res.json(reviews);
+  .delete((req, res, next) => {
+    const {users_id} = req.params;
+    SpewService.deleteUser(req.app.get("db"), users_id)
+      .then(numRowsAffected => {
+        res.status(204).end();
       })
       .catch(next);
   })
-  .post(jsonParser, (req, res, next) => {
-    const {users_id, reviews_id} = req.body;
-    const saveReview = {users_id, reviews_id};
-
-    saveReview.users_id = user;
-    saveReview.reviews_id = review;
-
-    SpewService.insertSavedReview(knexInstance, savedReview)
-      .then(saved => {
-        res
-        .status(201)
-        .location(`/saved/${saved.id}`)
-        .json(saved);
-      })
-      .catch(next);
-  });
-
-spewUsersRouter.route("/:users_id").get((req, res, next) => {
-  const knexInstance = req.app.get("db");
-  SpewService.getUsersById(knexInstance, req.params.users_id)
-    .then(users => {
-      if (users.length <= 0) {
-        return res.status(404).json({
-          error: {message: `User doesn't exist`},
-        });
-      }
-      res.json(users);
-    })
-    .catch(next);
-});
 
 module.exports = spewUsersRouter;

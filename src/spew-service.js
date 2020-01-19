@@ -20,7 +20,6 @@ const SpewService = {
       .from("users")
       .select("*")
       .where("users_id", id);
-    /* .first(); */
   },
 
   getAllUsers(knex) {
@@ -41,16 +40,16 @@ const SpewService = {
       .where("movie_title", movie_title);
   },
 
-  //TODO: Finish this service based off the above getReviewsByTitle service
+  //TODO: Not sure if what I actually need. Ask Mentor.
   getUserAndReviewId(db){
     return db
     .from('users')
     .innerJoin('reviews', 'users.users_id','reviews.reviews_id')
-    .select()
+    .select('users.users_id','reviews.reviews_id')
   },
 
-  insertUser(knex, newUser) {
-    return knex
+  insertUser(db, newUser) {
+    return db
       .insert(newUser)
       .into("users")
       .returning("*")
@@ -59,7 +58,7 @@ const SpewService = {
       });
   },
 
-  //TODO: Psuedo code. No logic behind it.
+  //TODO: Not sure if what I actually need. Ask Mentor.
   insertSavedReview(db, saveReview) {
     return db
       .insert(saveReview)
@@ -68,6 +67,21 @@ const SpewService = {
       .then(rows => {
         return rows[0];
       });
+  },
+
+  //TODO: 
+  updateUser(db, id) {
+    return db
+      .from("users")
+      .where({id})
+      .update();
+  },
+
+  deleteUser(db, users_id) {
+    return db
+      .from("users")
+      .where({users_id})
+      .delete();
   },
 };
 

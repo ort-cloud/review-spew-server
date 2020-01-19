@@ -34,6 +34,15 @@ if (NODE_ENV !== "production") {
 app.use("/api/search", spewRouter);
 app.use("/api/users", spewUsersRouter)
 
+/* app.get('/users', (req,res,next)=>{
+  const knexInstance = req.app.get('db');
+  SpewService.getUserAndReviewId(knexInstance)
+    .then(response => {
+      return res.json(response)
+    })
+    .catch(next);
+}) */
+
 /* app.get("/users/:users_id", (req, res, next) => {
   const knexInstance = req.app.get("db");
   SpewService.getUsersById(knexInstance, req.params.users_id)
