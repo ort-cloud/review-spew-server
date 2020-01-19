@@ -19,22 +19,12 @@ const SpewService = {
     return db
       .from("users")
       .select("*")
-      .where("users_id", id)
-      /* .first(); */
+      .where("users_id", id);
+    /* .first(); */
   },
 
   getAllUsers(knex) {
     return knex.select("*").from("users");
-  },
-
-  insertUser(knex, newUser) {
-    return knex
-      .insert(newUser)
-      .into("users")
-      .returning("*")
-      .then(rows => {
-        return rows[0];
-      });
   },
 
   getReviewsByTitle(db, movie_title) {
@@ -51,11 +41,30 @@ const SpewService = {
       .where("movie_title", movie_title);
   },
 
-  //TODO: Psuedo code. No logic behind it.
-  insertSavedReview(db) {
+  //TODO: Finish this service based off the above getReviewsByTitle service
+  getUserAndReviewId(db){
     return db
-      .insert(savedReview)
+    .from('users')
+    .innerJoin('reviews', 'users.users_id','reviews.reviews_id')
+    .select()
+  },
+
+  insertUser(knex, newUser) {
+    return knex
+      .insert(newUser)
+      .into("users")
+      .returning("*")
+      .then(rows => {
+        return rows[0];
+      });
+  },
+
+  //TODO: Psuedo code. No logic behind it.
+  insertSavedReview(db, saveReview) {
+    return db
+      .insert(saveReview)
       .into("usr_svd_rev")
+      .returning("*")
       .then(rows => {
         return rows[0];
       });
