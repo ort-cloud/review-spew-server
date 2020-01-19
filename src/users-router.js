@@ -4,17 +4,19 @@ const SpewService = require("./spew-service");
 const spewUsersRouter = express.Router();
 const jsonParser = express.json();
 
-spewUsersRouter.route("/").post(jsonParser, (req, res, next) => {
-  const {username, password} = req.body;
-  const newUser = {password, username};
+spewUsersRouter
+  .route("/")
+  .post(jsonParser, (req, res, next) => {
+    const {username, password} = req.body;
+    const newUser = {password, username};
 
-  for (const [key, value] of Object.entries(newUser)) {
-    if (value == null) {
-      return res.status(400).json({
-        error: {message: `Missing '${key}' in request body`},
-      });
+    for (const [key, value] of Object.entries(newUser)) {
+      if (value == null) {
+        return res.status(400).json({
+          error: {message: `Missing '${key}' in request body`},
+        });
+      }
     }
-  }
 
   newUser.username = username;
   newUser.password = password;
@@ -27,6 +29,22 @@ spewUsersRouter.route("/").post(jsonParser, (req, res, next) => {
         .json(user);
     })
     .catch(next);
+});
+
+spewUsersRouter
+.route('/savedReview')
+.post(jsonParser, (req, res, next) => {
+  const {users_id, reviews_id} = req.body;
+  const savedReview = {reviews_id, users_id};
+
+SpewService.insertSavedReview(req.app.get("db"), savedReview)
+  .then(review => {
+    console.log('LOOK HERE',review);
+    res
+      .status(201)
+      .json(review);
+  })
+  .catch(next);
 });
 
 spewUsersRouter

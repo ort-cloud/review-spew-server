@@ -1,4 +1,5 @@
 const SpewService = {
+//FIXME: Not sure if what I actually need. 
   getMovieById(db, id) {
     return db
       .from("movies")
@@ -6,7 +7,7 @@ const SpewService = {
       .where("movies_id", id)
       .first();
   },
-
+//FIXME: Not sure if what I actually need. 
   getReviewsById(db, id) {
     return db
       .from("reviews")
@@ -14,14 +15,14 @@ const SpewService = {
       .where("reviews_id", id)
       .first();
   },
-
+//FIXME: Not sure if what I actually need. 
   getUsersById(db, id) {
     return db
       .from("users")
       .select("*")
       .where("users_id", id);
   },
-
+//FIXME: Not sure if what I actually need. 
   getAllUsers(knex) {
     return knex.select("*").from("users");
   },
@@ -40,7 +41,7 @@ const SpewService = {
       .where("movie_title", movie_title);
   },
 
-  //TODO: Not sure if what I actually need. Ask Mentor.
+  //FIXME: Not sure if what I actually need. 
   getUserAndReviewId(db){
     return db
     .from('users')
@@ -58,22 +59,20 @@ const SpewService = {
       });
   },
 
-  //TODO: Not sure if what I actually need. Ask Mentor.
-  insertSavedReview(db, saveReview) {
+  insertSavedReview(db, savedReview) {
     return db
-      .insert(saveReview)
+      .insert(savedReview)
       .into("usr_svd_rev")
-      .returning("*")
-      .then(rows => {
-        return rows[0];
+      .then(saved => {
+        return "saved";
       });
   },
 
   //TODO: 
-  updateUser(db, id) {
+  updateUser(db, users_id) {
     return db
       .from("users")
-      .where({id})
+      .where({users_id})
       .update();
   },
 
