@@ -73,12 +73,12 @@ const SpewService = {
       });
   },
 
-  //TODO:
-  updateUser(db, users_id) {
+  //* CURRENTLY WORKING
+  updateUser(db, users_id, userToUpdate) {
     return db
       .from("users")
       .where({users_id})
-      .update();
+      .update(userToUpdate);
   },
 
   deleteUser(db, users_id) {

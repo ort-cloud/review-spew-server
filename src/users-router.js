@@ -54,5 +54,15 @@ spewUsersRouter
       })
       .catch(next);
   })
+  .patch(jsonParser, (req, res, next)=>{
+    const {username, password} = req.body;
+    const userToUpdate = {password, username};
+
+    UsersService.updateUser(req.app.get("db"), req.params.user_id, userToUpdate)
+    .then(numRowsAffected => {
+      res.status(204).end();
+    })
+    .catch(next);
+  })
 
 module.exports = spewUsersRouter;
