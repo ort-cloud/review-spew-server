@@ -54,6 +54,7 @@ spewUsersRouter
       })
       .catch(next);
   })
+  /* // ? WHY NO WORKING
   .patch(jsonParser, (req, res, next)=>{
     const {username, password} = req.body;
     const userToUpdate = {password, username};
@@ -63,6 +64,6 @@ spewUsersRouter
       res.status(204).end();
     })
     .catch(next);
-  })
+  }) */
 
 module.exports = spewUsersRouter;
