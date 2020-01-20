@@ -32,20 +32,34 @@ spewUsersRouter
 });
 
 spewUsersRouter
-.route('/savedReview')
-.post(jsonParser, (req, res, next) => {
-  const {users_id, reviews_id} = req.body;
-  const savedReview = {reviews_id, users_id};
+  .route('/savedReview')
+  .post(jsonParser, (req, res, next) => {
+    const {users_id, reviews_id} = req.body;
+    const savedReview = {reviews_id, users_id};
 
-SpewService.insertSavedReview(req.app.get("db"), savedReview)
-  .then(review => {
-    console.log('LOOK HERE',review);
-    res
-      .status(201)
-      .json(review);
+  SpewService.insertSavedReview(req.app.get("db"), savedReview)
+    .then(review => {
+      res
+        .status(201)
+        .json(review);
+    })
+    .catch(next);
   })
-  .catch(next);
-});
+
+spewUsersRouter
+  .route('/savedReview/:usr_svd_rev_id')
+  .delete((req, res, next) => {
+    const knexInstance = req.app.get("db");
+    const {usr_svd_rev_id} = req.params;
+    SpewService.deleteSavedReview(knexInstance, usr_svd_rev_id)
+      .then(numRowsAffected => {
+        res
+          .status(204)
+          .send("Delete Complete!")
+          .end();
+      })
+      .catch(next);
+  })
 
 spewUsersRouter
   .route("/:users_id")
