@@ -1,5 +1,4 @@
 const SpewService = {
-  //! Not sure if I actually need.
   getMovieById(db, id) {
     return db
       .from("movies")
@@ -8,7 +7,6 @@ const SpewService = {
       .first();
   },
 
-  //! Not sure if I actually need.
   getReviewsById(db, id) {
     return db
       .from("reviews")
@@ -17,7 +15,6 @@ const SpewService = {
       .first();
   },
 
-  //! Not sure if I actually need.
   getUsersById(db, id) {
     return db
       .from("users")
@@ -25,9 +22,22 @@ const SpewService = {
       .where("users_id", id);
   },
 
-  //! Not sure if I actually need.
   getAllUsers(knex) {
     return knex.select("*").from("users");
+  },
+
+  getSavedReviewById(db, id) {
+    return db
+      .from("usr_svd_rev")
+      .select("*")
+      .where("id", id);
+  },
+
+  getSavedReviewByUserId(db, users_id) {
+    return db
+      .from("usr_svd_rev")
+      .select("*")
+      .where("users_id", users_id);
   },
 
   getReviewsByTitle(db, movie_title) {
@@ -42,14 +52,6 @@ const SpewService = {
         "reviews.review_text"
       )
       .where("movie_title", movie_title);
-  },
-
-  //! Not sure if I actually need.
-  getUserAndReviewId(db) {
-    return db
-      .from("users")
-      .innerJoin("reviews", "users.users_id", "reviews.reviews_id")
-      .select("users.users_id", "reviews.reviews_id");
   },
 
   insertUser(db, newUser) {

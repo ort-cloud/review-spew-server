@@ -6,7 +6,8 @@ const helmet = require("helmet");
 const {NODE_ENV} = require("./config");
 const winston = require("winston");
 const spewRouter = require("./spew-router");
-const spewUsersRouter = require("./users-router")
+const spewUsersRouter = require("./users-router");
+const spewReviewsRouter = require("./reviews-router");
 const SpewService = require("./spew-service");
 
 const app = express();
@@ -32,7 +33,8 @@ if (NODE_ENV !== "production") {
 }
 
 app.use("/api/search", spewRouter);
-app.use("/api/users", spewUsersRouter)
+app.use("/api/users", spewUsersRouter);
+app.use("/api/reviews", spewReviewsRouter);
 
 /* app.get('/users', (req,res,next)=>{
   const knexInstance = req.app.get('db');
