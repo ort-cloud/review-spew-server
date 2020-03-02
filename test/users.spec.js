@@ -1,4 +1,4 @@
-/* require("dotenv").config();
+require("dotenv").config();
 const knex = require("knex");
 const {expect} = require("chai");
 const supertest = require("supertest");
@@ -26,22 +26,12 @@ describe(``, () => {
   context(``, () => {
     beforeEach("", () => seedSpewTables(db));
 
-    it(`Gets reviews based on movie_title`, () => {
-      const titleToSearch = "Test title 1";
-      const expectedResponse = [
-        {
-          movie_title: "Test title 1",
-          genre: "Test title 1",
-          review_author: "Test author 1",
-          review_url: "Test URL 1",
-          review_text:
-            "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Natus consequuntur deserunt commodi, nobis qui inventore corrupti iusto aliquid debitis unde non.Adipisci, pariatur.Molestiae, libero esse hic adipisci autem neque ?",
-        },
-      ];
+    it(``, () => {
+      
 
       return supertest(app)
-        .get(`/api/search/${titleToSearch}`)
-        .expect(expectedResponse);
+        .get(``)
+        .expect();
     });
   });
-}); */
+});
