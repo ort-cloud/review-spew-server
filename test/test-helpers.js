@@ -60,12 +60,57 @@ function makeReviewsArray(makeMoviesArray) {
   ];
 }
 
+function makeUsersArray() {
+  return [
+    {
+      users_id: 1,
+      username: 'userone',
+      password: 'password1'
+    },
+    {
+      users_id: 2,
+      username: 'usertwo',
+      password: 'password2'
+    },
+    {
+      users_id: 3,
+      username: 'userthree',
+      password: 'password3'
+    },
+    {
+      users_id: 4,
+      username: 'userfour',
+      password: 'password4',
+    },
+  ];
+}
 
-/* const testMovies = makeMoviesArray();
-const testReviews = makeReviewsArray(testMovies); */
+function makeUsrSvdRevArray() {
+  return [
+    {
+      id: 1,
+      users_id: 1,
+      reviews_id: 1
+    },
+    {
+      id: 2,
+      users_id: 2,
+      reviews_id: 2
+    },
+    {
+      id: 3,
+      users_id: 3,
+      reviews_id: 3
+    },
+    {
+      id: 4,
+      users_id: 4,
+      reviews_id: 4,
+    },
+  ];
+}
 
-
-function cleanTables(db) {
+/* function cleanTables(db) {
   return db.transaction(trx =>
     trx
       .raw(
@@ -75,9 +120,9 @@ function cleanTables(db) {
         RESTART IDENTITY CASCADE`
       )
   );
-}
+} */
 
-function seedSpewTables(db) {
+/* function seedSpewTables(db) {
   // use a transaction to group the queries and auto rollback on any failure
   const testMovies = makeMoviesArray();
   const testReviews = makeReviewsArray(testMovies);
@@ -85,11 +130,13 @@ function seedSpewTables(db) {
     await trx.into("movies").insert(testMovies);
     await trx.into("reviews").insert(testReviews);
   });
-}
+} */
 
 module.exports = {
   makeMoviesArray,
   makeReviewsArray,
-  seedSpewTables,
-  cleanTables,
+  makeUsersArray,
+  makeUsrSvdRevArray,
+  /* seedSpewTables, */
+  /* cleanTables, */
 }
