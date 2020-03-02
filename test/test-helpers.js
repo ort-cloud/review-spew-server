@@ -64,7 +64,7 @@ function makeUsersArray() {
       username: "userone",
       password: "password1",
     },
-    {
+    /*     {
       users_id: 2,
       username: "usertwo",
       password: "password2",
@@ -78,7 +78,7 @@ function makeUsersArray() {
       users_id: 4,
       username: "userfour",
       password: "password4",
-    },
+    }, */
   ];
 }
 
@@ -89,7 +89,7 @@ function makeUsrSvdRevArray() {
       users_id: 1,
       reviews_id: 1,
     },
-    {
+    /*     {
       id: 2,
       users_id: 2,
       reviews_id: 2,
@@ -103,7 +103,7 @@ function makeUsrSvdRevArray() {
       id: 4,
       users_id: 4,
       reviews_id: 4,
-    },
+    }, */
   ];
 }
 
@@ -112,7 +112,9 @@ function cleanTables(db) {
     trx.raw(
       `TRUNCATE
         reviews,
-        movies
+        movies,
+        users,
+        usr_svd_rev
         RESTART IDENTITY CASCADE`
     )
   );
@@ -122,9 +124,13 @@ function seedSpewTables(db) {
   // use a transaction to group the queries and auto rollback on any failure
   const testMovies = makeMoviesArray();
   const testReviews = makeReviewsArray(testMovies);
+  const testUsers = makeUsersArray();
+  const testSavedReview = makeUsrSvdRevArray();
   return db.transaction(async trx => {
     await trx.into("movies").insert(testMovies);
     await trx.into("reviews").insert(testReviews);
+    await trx.into("users").insert(testUsers);
+    await trx.into("usr_svd_rev").insert(testSavedReview);
   });
 }
 
