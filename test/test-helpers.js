@@ -11,7 +11,7 @@ function makeMoviesArray() {
 function makeReviewsArray(makeMoviesArray) {
   return [
     {
-      reviews_id: 1,
+      /* reviews_id: 1, */
       movies_id: 1,
       review_author: "Test author 1",
       review_url: "Test URL 1",
@@ -34,7 +34,7 @@ function makeUsersArray() {
   ];
 }
 
-function makeUsrSvdRevArray() {
+function makeUsrSvdRev() {
   return [
     {
       users_id: 1,
@@ -61,7 +61,7 @@ function seedSpewTables(db) {
   const testMovies = makeMoviesArray();
   const testReviews = makeReviewsArray(testMovies);
   const testUsers = makeUsersArray();
-  const testSavedReview = makeUsrSvdRevArray();
+  const testSavedReview = makeUsrSvdRev();
   return db.transaction(async trx => {
     await trx.into("movies").insert(testMovies);
     await trx.into("reviews").insert(testReviews);
@@ -74,7 +74,7 @@ module.exports = {
   makeMoviesArray,
   makeReviewsArray,
   makeUsersArray,
-  makeUsrSvdRevArray,
+  makeUsrSvdRev,
   seedSpewTables,
   cleanTables,
 };
