@@ -74,7 +74,6 @@ const SpewService = {
   },
 
   updateUser(db, users_id, userToUpdate) {
-    console.log(users_id);
     return db
       .from("users")
       .where({users_id})

@@ -8,7 +8,5 @@ process.env.TEST_DB_URL =
   process.env.TEST_DB_URL ||
   "postgresql://ort_cloud:order66@localhost/review-spew-test";
 
-
-
 global.expect = expect;
 global.supertest = supertest;

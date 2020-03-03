@@ -4,19 +4,17 @@ const SpewService = require("./spew-service");
 const spewUsersRouter = express.Router();
 const jsonParser = express.json();
 
-spewUsersRouter
-  .route("/")
-  .post(jsonParser, (req, res, next) => {
-    const {username, password} = req.body;
-    const newUser = {password, username};
+spewUsersRouter.route("/").post(jsonParser, (req, res, next) => {
+  const {username, password} = req.body;
+  const newUser = {password, username};
 
-    for (const [key, value] of Object.entries(newUser)) {
-      if (value == null) {
-        return res.status(400).json({
-          error: {message: `Missing '${key}' in request body`},
-        });
-      }
+  for (const [key, value] of Object.entries(newUser)) {
+    if (value == null) {
+      return res.status(400).json({
+        error: {message: `Missing '${key}' in request body`},
+      });
     }
+  }
 
   newUser.username = username;
   newUser.password = password;
@@ -54,16 +52,15 @@ spewUsersRouter
       })
       .catch(next);
   })
-  .patch(jsonParser, (req, res, next)=>{
+  .patch(jsonParser, (req, res, next) => {
     const {username, password} = req.body;
     const userToUpdate = {password, username};
 
-    console.log(req.params);
     SpewService.updateUser(req.app.get("db"), req.params.users_id, userToUpdate)
-    .then(numRowsAffected => {
-      res.status(204).end();
-    })
-    .catch(next);
-  })
+      .then(numRowsAffected => {
+        res.status(204).end();
+      })
+      .catch(next);
+  });
 
 module.exports = spewUsersRouter;
