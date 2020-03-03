@@ -49,3 +49,15 @@ describe(`GET /api/users/:users_id`, () => {
       .expect(200);
   });
 });
+
+describe(`DELETE /api/users/:users_id`, () => {
+  beforeEach("seed the db", () => seedSpewTables(db));
+
+  it(`responds with 204`, () => {
+    const id = "2";
+
+    return supertest(app)
+      .delete(`/api/users/${id}`)
+      .expect(204);
+  });
+});

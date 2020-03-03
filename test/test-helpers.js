@@ -27,6 +27,10 @@ function makeUsersArray() {
       username: "userone",
       password: "password1",
     },
+    {
+      username: "usertwo",
+      password: "password2",
+    },
   ];
 }
 
