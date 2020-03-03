@@ -22,16 +22,18 @@ afterEach("cleanup", () => cleanTables(db));
 
 after(`Disconnect from db`, () => db.destroy());
 
-describe(``, () => {
-  context(``, () => {
-    beforeEach("", () => seedSpewTables(db));
+describe(`POST /api/users/`, () => {
+  beforeEach("seed the db", () => seedSpewTables(db));
 
-    it(``, () => {
-      
+  const createTestUser = {
+    username: "testUser",
+    password: "testpassword",
+  };
 
-      return supertest(app)
-        .get(``)
-        .expect();
-    });
+  it(`responds with 201`, () => {
+    return supertest(app)
+      .post(`/api/users/`)
+      .send(createTestUser)
+      .expect(201);
   });
 });

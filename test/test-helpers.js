@@ -60,50 +60,18 @@ function makeReviewsArray(makeMoviesArray) {
 function makeUsersArray() {
   return [
     {
-      users_id: 1,
       username: "userone",
       password: "password1",
     },
-    /*     {
-      users_id: 2,
-      username: "usertwo",
-      password: "password2",
-    },
-    {
-      users_id: 3,
-      username: "userthree",
-      password: "password3",
-    },
-    {
-      users_id: 4,
-      username: "userfour",
-      password: "password4",
-    }, */
   ];
 }
 
 function makeUsrSvdRevArray() {
   return [
     {
-      id: 1,
       users_id: 1,
       reviews_id: 1,
     },
-    /*     {
-      id: 2,
-      users_id: 2,
-      reviews_id: 2,
-    },
-    {
-      id: 3,
-      users_id: 3,
-      reviews_id: 3,
-    },
-    {
-      id: 4,
-      users_id: 4,
-      reviews_id: 4,
-    }, */
   ];
 }
 

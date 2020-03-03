@@ -73,9 +73,6 @@ const SpewService = {
       });
   },
 
-
-
-  //* CURRENTLY WORKING
   updateUser(db, users_id, userToUpdate) {
     console.log(users_id);
     return db
@@ -83,9 +80,6 @@ const SpewService = {
       .where({users_id})
       .update(userToUpdate);
   },
-
-
-
 
   deleteUser(db, users_id) {
     return db
