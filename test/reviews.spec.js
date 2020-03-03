@@ -48,3 +48,15 @@ describe(`GET /api/reviews/savedReview/:usr_svd_rev_id`, () => {
       .expect(200);
   });
 });
+
+describe(`DELETE /api/reviews/savedReview/:usr_svd_rev_id`, () => {
+  beforeEach("seed the db", () => seedSpewTables(db));
+
+  it(`responds with 204`, () => {
+    const id = 2;
+
+    return supertest(app)
+      .delete(`/api/reviews/savedReview/${id}`)
+      .expect(204);
+  });
+});
