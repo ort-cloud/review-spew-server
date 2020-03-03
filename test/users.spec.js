@@ -37,3 +37,15 @@ describe(`POST /api/users/`, () => {
       .expect(201);
   });
 });
+
+describe(`GET /api/users/:users_id`, () => {
+  beforeEach("seed the db", () => seedSpewTables(db));
+
+  it(`responds with 200`, () => {
+    const id = "1";
+
+    return supertest(app)
+      .get(`/api/users/${id}`)
+      .expect(200);
+  });
+});
