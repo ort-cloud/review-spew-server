@@ -22,6 +22,20 @@ const SpewService = {
       .where("users_id", id);
   },
 
+  getUserByUsername(db, username) {
+    return db
+    .from('users')
+    .where({username})
+    .first()
+  },
+
+  comparePasswords(knex, password) {
+    return knex
+    .from('users')
+    .where({password})
+    .first()
+},
+
   getAllUsers(knex) {
     return knex.select("*").from("users");
   },

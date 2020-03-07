@@ -29,6 +29,44 @@ spewUsersRouter.route("/").post(jsonParser, (req, res, next) => {
     .catch(next);
 });
 
+spewUsersRouter.route("/login").post(jsonParser, (req, res, next) => {
+  const {username, password} = req.body;
+  const loginUser = {username, password};
+
+  for (const [key, value] of Object.entries(loginUser)) {
+    if (value == null) {
+      return res.status(400).json({
+        error: {message: `Missing '${key}' in request body`},
+      });
+    }
+  }
+  SpewService.getUserByUsername(req.app.get("db"), loginUser.username)
+    .then(dbUser => {
+      console.log(dbUser);
+      if (!dbUser)
+        return res.status(400).json({
+          error: "Incorrect username or password",
+        });
+      return SpewService.comparePasswords(
+        req.app.get("db"),
+        loginUser.password
+      ).then(password => {
+        if (!password) {
+          return res.status(400).json({
+            error: `Incorrect username or password`,
+          });
+        }
+        const sub = dbUser.username;
+        const payload = dbUser.id;
+        return res.send({
+          id: payload,
+          username: sub,
+        });
+      });
+    })
+    .catch(next);
+});
+
 spewUsersRouter
   .route("/:users_id")
   .get((req, res, next) => {
