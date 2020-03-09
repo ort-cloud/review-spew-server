@@ -42,7 +42,6 @@ spewUsersRouter.route("/login").post(jsonParser, (req, res, next) => {
   }
   SpewService.getUserByUsername(req.app.get("db"), loginUser.username)
     .then(dbUser => {
-      console.log(dbUser);
       if (!dbUser)
         return res.status(400).json({
           error: "Incorrect username or password",
