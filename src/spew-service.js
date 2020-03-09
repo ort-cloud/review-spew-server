@@ -25,6 +25,7 @@ const SpewService = {
   getUserByUsername(db, username) {
     return db
     .from('users')
+    .select("*")
     .where({username})
     .first()
   },
