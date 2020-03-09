@@ -60,6 +60,7 @@ const SpewService = {
       .from("movies")
       .innerJoin("reviews", "movies.movies_id", "reviews.movies_id")
       .select(
+        "reviews.reviews_id",
         "movies.movie_title",
         "movies.genre",
         "reviews.review_author",
