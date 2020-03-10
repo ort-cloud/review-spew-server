@@ -70,6 +70,21 @@ const SpewService = {
       .where("movie_title", movie_title);
   },
 
+  getReviewsByReviewsId(db, reviews_id) {
+    return db
+      .from("movies")
+      .innerJoin("reviews", "movies.movies_id", "reviews.movies_id")
+      .select(
+        "reviews.reviews_id",
+        "movies.movie_title",
+        "movies.genre",
+        "reviews.review_author",
+        "reviews.review_url",
+        "reviews.review_text"
+      )
+      .where("reviews_id", reviews_id);
+  },
+
   insertUser(db, newUser) {
     return db
       .insert(newUser)
