@@ -24,18 +24,18 @@ const SpewService = {
 
   getUserByUsername(db, username) {
     return db
-    .from('users')
-    .select("*")
-    .where({username})
-    .first()
+      .from("users")
+      .select("*")
+      .where({username})
+      .first();
   },
 
   comparePasswords(knex, password) {
     return knex
-    .from('users')
-    .where({password})
-    .first()
-},
+      .from("users")
+      .where({password})
+      .first();
+  },
 
   getAllUsers(knex) {
     return knex.select("*").from("users");
@@ -118,11 +118,11 @@ const SpewService = {
       .delete();
   },
 
-  deleteSavedReview(db, reviews_id) {
+  deleteSavedReview(db, id) {
     return db
       .from("usr_svd_rev")
-      .where({reviews_id})
-      .delete()
+      .where({id})
+      .delete();
   },
 };
 
