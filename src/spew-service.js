@@ -118,14 +118,11 @@ const SpewService = {
       .delete();
   },
 
-  deleteSavedReview(db, id) {
+  deleteSavedReview(db, reviews_id) {
     return db
       .from("usr_svd_rev")
-      .where({id})
+      .where({reviews_id})
       .delete()
-      .then(response => {
-        return "Delete Complete!";
-      });
   },
 };
 
