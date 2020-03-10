@@ -37,8 +37,8 @@ spewReviewsRouter
   })
   .delete((req, res, next) => {
     const knexInstance = req.app.get("db");
-    const {reviews_id} = req.params;
-    SpewService.deleteSavedReview(knexInstance, reviews_id)
+    const {id} = req.params;
+    SpewService.deleteSavedReview(knexInstance, id)
       .then(numRowsAffected => {
         res.status(204).end();
       })
