@@ -66,7 +66,7 @@ spewReviewsRouter.route("/savedReview/user/:users_id").get((req, res, next) => {
           error: {message: `User-review doesn't exist`},
         });
       }
-      res.json(getSaved);
+      res.status(200).json(getSaved);
     })
     .catch(next);
 });
