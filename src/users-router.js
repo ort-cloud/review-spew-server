@@ -103,21 +103,19 @@ spewUsersRouter
       .catch(next);
   });
 
-  spewUsersRouter
-    .route("/username/:username")
-    .get((req, res, next)=>{
-      const knexInstance = req.app.get("db");
-      const {username} = req.params;
-      SpewService.getUserByUsername(knexInstance, username)
-        .then(data => {
-          if (data.length <= 0){
-            return res.status(404).json({
-              error: {message: `User doesn't exist`},
-            })
-          }
-          res.json(data)
-        })
-        .catch(next)
+spewUsersRouter.route("/username/:username").get((req, res, next) => {
+  const knexInstance = req.app.get("db");
+  const {username} = req.params;
+  SpewService.getUserByUsername(knexInstance, username)
+    .then(data => {
+      if (data.length <= 0) {
+        return res.status(404).json({
+          error: {message: `User doesn't exist`},
+        });
+      }
+      res.json(data);
     })
+    .catch(next);
+});
 
 module.exports = spewUsersRouter;

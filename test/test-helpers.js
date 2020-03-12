@@ -11,7 +11,6 @@ function makeMoviesArray() {
 function makeReviewsArray(makeMoviesArray) {
   return [
     {
-      /* reviews_id: 1, */
       movies_id: 1,
       review_author: "Test author 1",
       review_url: "Test URL 1",
@@ -57,7 +56,6 @@ function cleanTables(db) {
 }
 
 function seedSpewTables(db) {
-  // use a transaction to group the queries and auto rollback on any failure
   const testMovies = makeMoviesArray();
   const testReviews = makeReviewsArray(testMovies);
   const testUsers = makeUsersArray();

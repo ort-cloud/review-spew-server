@@ -70,8 +70,6 @@ const SpewService = {
       .where("movie_title", movie_title);
   },
 
-
-  //*****Service used by componentDidMount in Reviews.js*/
   getReviewsByReviewsId(db, reviews_id) {
     return db
       .from("movies")
@@ -93,7 +91,6 @@ const SpewService = {
       .select("*")
       .where("users_id", users_id);
   },
-
 
   insertUser(db, newUser) {
     return db

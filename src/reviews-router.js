@@ -56,21 +56,22 @@ spewReviewsRouter.route("/savedReview").post(jsonParser, (req, res, next) => {
     .catch(next);
 });
 
-spewReviewsRouter.route("/savedReview/check/:users_id").get((req, res, next) => {
-  const knexInstance = req.app.get("db");
-  const {users_id} = req.params;
+spewReviewsRouter
+  .route("/savedReview/check/:users_id")
+  .get((req, res, next) => {
+    const knexInstance = req.app.get("db");
+    const {users_id} = req.params;
 
-  SpewService.getCheckIfUserSaved(knexInstance, users_id)
-    .then(getSaved => {
-      if (getSaved.length <= 0) {
-        return /* res.json(getSaved); */ res.json(false)
-      }
-      res.json(true);
-    })
-    .catch(next);
-});
+    SpewService.getCheckIfUserSaved(knexInstance, users_id)
+      .then(getSaved => {
+        if (getSaved.length <= 0) {
+          return res.json(false);
+        }
+        res.json(true);
+      })
+      .catch(next);
+  });
 
-//*****componentDidMount in Reviews.js calls here */
 spewReviewsRouter.route("/savedReview/user/:users_id").get((req, res, next) => {
   const knexInstance = req.app.get("db");
   const {users_id} = req.params;
@@ -88,5 +89,3 @@ spewReviewsRouter.route("/savedReview/user/:users_id").get((req, res, next) => {
 });
 
 module.exports = spewReviewsRouter;
-
-
