@@ -48,7 +48,7 @@ const SpewService = {
       .where("id", id);
   },
 
-  getSavedReviewByUserId(db, users_id) {
+  getSavedReviewUserId(db, users_id) {
     return db
       .from("usr_svd_rev")
       .select("*")
@@ -86,6 +86,14 @@ const SpewService = {
       )
       .where("reviews_id", reviews_id);
   },
+
+  getCheckIfUserSaved(db, users_id) {
+    return db
+      .from("usr_svd_rev")
+      .select("*")
+      .where("users_id", users_id);
+  },
+
 
   insertUser(db, newUser) {
     return db

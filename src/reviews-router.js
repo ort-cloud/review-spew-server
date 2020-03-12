@@ -56,14 +56,26 @@ spewReviewsRouter.route("/savedReview").post(jsonParser, (req, res, next) => {
     .catch(next);
 });
 
+spewReviewsRouter.route("/savedReview/check/:users_id").get((req, res, next) => {
+  const knexInstance = req.app.get("db");
+  const {users_id} = req.params;
+
+  SpewService.getCheckIfUserSaved(knexInstance, users_id)
+    .then(getSaved => {
+      if (getSaved.length <= 0) {
+        return res.json(getSaved);
+      }
+      res.status(200).json(true);
+    })
+    .catch(next);
+});
+
 //*****componentDidMount in Reviews.js calls here */
 spewReviewsRouter.route("/savedReview/user/:users_id").get((req, res, next) => {
   const knexInstance = req.app.get("db");
   const {users_id} = req.params;
 
-  
-
-  SpewService.getSavedReviewByUserId(knexInstance, users_id)
+  SpewService.getSavedReviewUserId(knexInstance, users_id)
     .then(getSaved => {
       if (getSaved.length <= 0) {
         return res.status(404).json({
@@ -76,3 +88,5 @@ spewReviewsRouter.route("/savedReview/user/:users_id").get((req, res, next) => {
 });
 
 module.exports = spewReviewsRouter;
+
+
