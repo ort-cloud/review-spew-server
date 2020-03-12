@@ -63,9 +63,9 @@ spewReviewsRouter.route("/savedReview/check/:users_id").get((req, res, next) => 
   SpewService.getCheckIfUserSaved(knexInstance, users_id)
     .then(getSaved => {
       if (getSaved.length <= 0) {
-        return res.json(getSaved);
+        return /* res.json(getSaved); */ res.json(false)
       }
-      res.status(200).json(true);
+      res.json(true);
     })
     .catch(next);
 });
