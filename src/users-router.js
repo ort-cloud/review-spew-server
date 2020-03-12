@@ -93,10 +93,10 @@ spewUsersRouter
       .catch(next);
   })
   .patch(jsonParser, (req, res, next) => {
-    const {username} = req.body;
-    const userToUpdate = {username};
+    const {users_id, username} = req.body;
+    const userToUpdate = {username, users_id};
 
-    SpewService.updateUser(req.app.get("db"), req.params.users_id, userToUpdate)
+    SpewService.updateUser(req.app.get("db"), users_id, userToUpdate)
       .then(numRowsAffected => {
         res.status(204).end();
       })
