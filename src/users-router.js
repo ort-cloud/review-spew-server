@@ -93,8 +93,8 @@ spewUsersRouter
       .catch(next);
   })
   .patch(jsonParser, (req, res, next) => {
-    const {username, password} = req.body;
-    const userToUpdate = {password, username};
+    const {username} = req.body;
+    const userToUpdate = {username};
 
     SpewService.updateUser(req.app.get("db"), req.params.users_id, userToUpdate)
       .then(numRowsAffected => {
