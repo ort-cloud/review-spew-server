@@ -70,6 +70,8 @@ const SpewService = {
       .where("movie_title", movie_title);
   },
 
+
+  //*****Service used by componentDidMount in Reviews.js*/
   getReviewsByReviewsId(db, reviews_id) {
     return db
       .from("movies")
