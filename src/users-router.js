@@ -29,6 +29,46 @@ spewUsersRouter.route("/").post(jsonParser, (req, res, next) => {
     .catch(next);
 });
 
+spewUsersRouter.route("/login").post(jsonParser, (req, res, next) => {
+  const {username, password} = req.body;
+  const loginUser = {username, password};
+
+  for (const [key, value] of Object.entries(loginUser)) {
+    if (value == null) {
+      return res.status(400).json({
+        error: {message: `Missing '${key}' in request body`},
+      });
+    }
+  }
+  SpewService.getUserByUsername(req.app.get("db"), loginUser.username)
+    .then(dbUser => {
+      if (!dbUser)
+        return res.status(400).json({
+          error: "Incorrect username or password",
+        });
+      return SpewService.comparePasswords(
+        req.app.get("db"),
+        loginUser.password
+      ).then(password => {
+        if (!password) {
+          return res.status(400).json({
+            error: `Incorrect username or password`,
+          });
+        }
+        const sub = dbUser.username;
+        const payload = dbUser.id;
+        return (
+          res.send({
+            id: payload,
+            username: sub,
+          }),
+          res.json()
+        );
+      });
+    })
+    .catch(next);
+});
+
 spewUsersRouter
   .route("/:users_id")
   .get((req, res, next) => {
@@ -53,14 +93,31 @@ spewUsersRouter
       .catch(next);
   })
   .patch(jsonParser, (req, res, next) => {
-    const {username, password} = req.body;
-    const userToUpdate = {password, username};
+    const {users_id, username} = req.body;
+    const userToUpdate = {username, users_id};
 
-    SpewService.updateUser(req.app.get("db"), req.params.users_id, userToUpdate)
+    SpewService.updateUser(req.app.get("db"), users_id, userToUpdate)
       .then(numRowsAffected => {
         res.status(204).end();
       })
       .catch(next);
   });
+
+  spewUsersRouter
+    .route("/username/:username")
+    .get((req, res, next)=>{
+      const knexInstance = req.app.get("db");
+      const {username} = req.params;
+      SpewService.getUserByUsername(knexInstance, username)
+        .then(data => {
+          if (data.length <= 0){
+            return res.status(404).json({
+              error: {message: `User doesn't exist`},
+            })
+          }
+          res.json(data)
+        })
+        .catch(next)
+    })
 
 module.exports = spewUsersRouter;

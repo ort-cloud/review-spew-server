@@ -22,6 +22,21 @@ const SpewService = {
       .where("users_id", id);
   },
 
+  getUserByUsername(db, username) {
+    return db
+      .from("users")
+      .select("*")
+      .where({username})
+      .first();
+  },
+
+  comparePasswords(knex, password) {
+    return knex
+      .from("users")
+      .where({password})
+      .first();
+  },
+
   getAllUsers(knex) {
     return knex.select("*").from("users");
   },
@@ -33,7 +48,7 @@ const SpewService = {
       .where("id", id);
   },
 
-  getSavedReviewByUserId(db, users_id) {
+  getSavedReviewUserId(db, users_id) {
     return db
       .from("usr_svd_rev")
       .select("*")
@@ -45,6 +60,7 @@ const SpewService = {
       .from("movies")
       .innerJoin("reviews", "movies.movies_id", "reviews.movies_id")
       .select(
+        "reviews.reviews_id",
         "movies.movie_title",
         "movies.genre",
         "reviews.review_author",
@@ -53,6 +69,31 @@ const SpewService = {
       )
       .where("movie_title", movie_title);
   },
+
+
+  //*****Service used by componentDidMount in Reviews.js*/
+  getReviewsByReviewsId(db, reviews_id) {
+    return db
+      .from("movies")
+      .innerJoin("reviews", "movies.movies_id", "reviews.movies_id")
+      .select(
+        "reviews.reviews_id",
+        "movies.movie_title",
+        "movies.genre",
+        "reviews.review_author",
+        "reviews.review_url",
+        "reviews.review_text"
+      )
+      .where("reviews_id", reviews_id);
+  },
+
+  getCheckIfUserSaved(db, users_id) {
+    return db
+      .from("usr_svd_rev")
+      .select("*")
+      .where("users_id", users_id);
+  },
+
 
   insertUser(db, newUser) {
     return db
@@ -91,10 +132,7 @@ const SpewService = {
     return db
       .from("usr_svd_rev")
       .where({id})
-      .delete()
-      .then(response => {
-        return "Delete Complete!";
-      });
+      .delete();
   },
 };
 
