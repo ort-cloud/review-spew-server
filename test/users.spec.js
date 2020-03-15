@@ -61,20 +61,3 @@ describe(`DELETE /api/users/:users_id`, () => {
       .expect(204);
   });
 });
-
-describe(`PATCH /api/users/:users_id`, () => {
-  beforeEach("seed the db", () => seedSpewTables(db));
-
-  it(`responds with 204`, () => {
-    const id = "1";
-    const changedUsername = {
-      username: "newUserName",
-      password: "password1",
-    };
-
-    return supertest(app)
-      .patch(`/api/users/${id}`)
-      .send(changedUsername)
-      .expect(204);
-  });
-});

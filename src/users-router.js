@@ -91,33 +91,21 @@ spewUsersRouter
         res.status(204).end();
       })
       .catch(next);
-  })
-  .patch(jsonParser, (req, res, next) => {
-    const {users_id, username} = req.body;
-    const userToUpdate = {username, users_id};
-
-    SpewService.updateUser(req.app.get("db"), users_id, userToUpdate)
-      .then(numRowsAffected => {
-        res.status(204).end();
-      })
-      .catch(next);
   });
 
-  spewUsersRouter
-    .route("/username/:username")
-    .get((req, res, next)=>{
-      const knexInstance = req.app.get("db");
-      const {username} = req.params;
-      SpewService.getUserByUsername(knexInstance, username)
-        .then(data => {
-          if (data.length <= 0){
-            return res.status(404).json({
-              error: {message: `User doesn't exist`},
-            })
-          }
-          res.json(data)
-        })
-        .catch(next)
+spewUsersRouter.route("/username/:username").get((req, res, next) => {
+  const knexInstance = req.app.get("db");
+  const {username} = req.params;
+  SpewService.getUserByUsername(knexInstance, username)
+    .then(data => {
+      if (data.length <= 0) {
+        return res.status(404).json({
+          error: {message: `User doesn't exist`},
+        });
+      }
+      res.json(data);
     })
+    .catch(next);
+});
 
 module.exports = spewUsersRouter;
